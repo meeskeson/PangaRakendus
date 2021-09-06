@@ -26,6 +26,14 @@ public class Account {
         return number;
     }
 
+    public int getBalance() {
+        return balance;
+    }
+
+    public boolean isIs_locked() {
+        return is_locked;
+    }
+
     public void setIs_locked(boolean is_locked) {
         this.is_locked = is_locked;
     }
