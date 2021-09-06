@@ -1,6 +1,7 @@
 package ee.raunokivi.PangaRakendus.repository;
 
 import ee.raunokivi.PangaRakendus.Account;
+import ee.raunokivi.PangaRakendus.Client;
 import ee.raunokivi.PangaRakendus.PankService.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -15,6 +16,14 @@ public class AccountRepository {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    public void createClient(Client newClient) {
+        String sql = "INSERT INTO clients (id, name) VALUES (:a1, :a2)";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("a1", newClient.getId());
+        paramMap.put("a2", newClient.getName());
+        jdbcTemplate.update(sql, paramMap);
+    }
 
     public void createAccount(Account newAccount) {
         String sql = "INSERT INTO account (number, name) VALUES (:a1, :a2)";

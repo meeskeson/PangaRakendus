@@ -1,6 +1,7 @@
 package ee.raunokivi.PangaRakendus.PankService;
 
 import ee.raunokivi.PangaRakendus.Account;
+import ee.raunokivi.PangaRakendus.Client;
 import ee.raunokivi.PangaRakendus.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,6 +28,11 @@ public class BankService {
             result.setIs_locked(resultSet.getBoolean("is_locked"));
             return result;
         }
+    }
+
+    public String createClient(Client newClient) {
+        accountRepository.createClient(newClient);
+        return "Welcome to our bank, " + newClient.getName() + "!";
     }
 
     public String createAccount(Account newAccount) {

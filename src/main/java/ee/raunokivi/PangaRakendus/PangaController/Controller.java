@@ -1,6 +1,7 @@
 package ee.raunokivi.PangaRakendus.PangaController;
 
 import ee.raunokivi.PangaRakendus.Account;
+import ee.raunokivi.PangaRakendus.Client;
 import ee.raunokivi.PangaRakendus.PankService.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,11 @@ public class Controller {
 
     @Autowired
     private BankService bankService;
+    
+    @PostMapping("createclient")
+    public String createClient(@RequestBody Client newClient) {
+        return bankService.createClient(newClient);
+    }
 
     @PostMapping("create")
     public void createAccount(@RequestBody Account newAccount) {
