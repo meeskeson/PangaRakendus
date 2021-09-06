@@ -33,6 +33,15 @@ public class AccountRepository {
         jdbcTemplate.update(sql, paramMap);
     }
 
+    public void recordTransaction(String id, String account_nr, String transaction) {
+        String sql = "INSERT INTO transactions (id, account_nr, transaction) VALUES (:a1, :a2, :a3)";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("a1", id);
+        paramMap.put("a2", account_nr);
+        paramMap.put("a3", transaction);
+        jdbcTemplate.update(sql, paramMap);
+    }
+
     public List<Account> getList() {
         String sql = "SELECT * FROM account";
         Map<String, Object> paramMap = new HashMap<>();

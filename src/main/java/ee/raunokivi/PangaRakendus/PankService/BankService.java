@@ -32,6 +32,7 @@ public class BankService {
 
     public String createClient(Client newClient) {
         accountRepository.createClient(newClient);
+        accountRepository.recordTransaction(newClient.getId(), newClient.getAccount_nr(), "Became our client");
         return "Welcome to our bank, " + newClient.getName() + "!";
     }
 
