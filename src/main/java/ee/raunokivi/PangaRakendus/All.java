@@ -1,18 +1,12 @@
 package ee.raunokivi.PangaRakendus;
 
-public class Client {
-    private int id;
+public class All {
     private String firstname;
     private String lastname;
     private String address;
+    private String number;
+    private int balance;
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
@@ -26,15 +20,11 @@ public class Client {
         this.address = address;
     }
 
-    public String getAddress() {
-        return address;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getFirstname() {
-        return firstname;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }

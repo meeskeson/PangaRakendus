@@ -1,35 +1,24 @@
 package ee.raunokivi.PangaRakendus;
 
-public class Account {
-    private String number;
-    private int id;
+public class AccountPlus {
     private int balance;
+    private String number;
     private boolean is_locked;
 
-    public void setNumber(String number) {
-        this.number = number;
+    public int getBalance() {
+        return balance;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
     public void setBalance(int balance) {
         this.balance = balance;
     }
 
-
     public String getNumber() {
         return number;
     }
 
-    public int getBalance() {
-        return balance;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public boolean isIs_locked() {
@@ -39,5 +28,4 @@ public class Account {
     public void setIs_locked(boolean is_locked) {
         this.is_locked = is_locked;
     }
-
 }
