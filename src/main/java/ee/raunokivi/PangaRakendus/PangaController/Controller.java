@@ -1,9 +1,10 @@
 package ee.raunokivi.PangaRakendus.PangaController;
 
-import ee.raunokivi.PangaRakendus.Account;
+import ee.raunokivi.PangaRakendus.*;
 import ee.raunokivi.PangaRakendus.PankService.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -13,14 +14,29 @@ public class Controller {
     @Autowired
     private BankService bankService;
 
+    @PostMapping("createclient")
+    public Integer createClient(@RequestBody Client newClient) {
+        return bankService.createClient(newClient);
+    }
+
     @PostMapping("create")
-    public void createAccount(@RequestBody Account newAccount) {
-        bankService.createAccount(newAccount);
+    public String createAccount(@RequestBody Account newAccount) {
+        return bankService.createAccount(newAccount);
     }
 
     @GetMapping("list")
-    public List<Account> getList() {
+    public List<All> getList() {
         return bankService.getList();
+    }
+
+    @GetMapping("getdata")
+    public List<Everything> getData() {
+        return bankService.getData();
+    }
+
+    @GetMapping("gethistory/{accountNr}")
+    public List<History> getHistory(@PathVariable("accountNr") String accountNr) {
+        return bankService.getHistory(accountNr);
     }
 
     @GetMapping("balance/{id}")
@@ -34,7 +50,7 @@ public class Controller {
     }
 
     @PutMapping("withdraw/{id}/{amount}")
-    public String withdrawMoney(@PathVariable("id") String x, @PathVariable("amount") int y) {
+    public String withdrawMoney2(@PathVariable("id") String x, @PathVariable("amount") int y) {
         return bankService.withdrawMoney(x, y);
     }
 
@@ -49,7 +65,7 @@ public class Controller {
     }
 
     @GetMapping("getaccount/{id}")
-    public Account getOneAccount(@PathVariable("id") String id) {
+    public List<Balance> getOneAccount(@PathVariable("id") int id) {
         return bankService.getOneAccount(id);
     }
 

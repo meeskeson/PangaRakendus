@@ -1,0 +1,81 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!--    <changeSet id="1" author="Siim">-->
+    <!--        <createTable tableName="author">-->
+    <!--            <column name="id" type="int" autoIncrement="true">-->
+    <!--                <constraints primaryKey="true"/>-->
+    <!--            </column>-->
+    <!--            <column name="name" type="text"/>-->
+    <!--        </createTable>-->
+
+    <!--        <createTable tableName="book">-->
+    <!--            <column name="id" type="int" autoIncrement="true">-->
+    <!--                <constraints primaryKey="true"/>-->
+    <!--            </column>-->
+    <!--            <column name="description" type="text"/>-->
+    <!--            <column name="name" type="text"/>-->
+    <!--            <column name="author_id" type="int">-->
+    <!--                <constraints foreignKeyName="fk_book_author" references="author(id)"/>-->
+    <!--            </column>-->
+    <!--        </createTable>-->
+    <!--    </changeSet>-->
+
+    <changeSet id="2021-09-07 Add account table" author="Rauno Kivi">
+        <createTable tableName="clients">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="firstname" type="text"/>
+            <column name="lastname" type="text"/>
+            <column name="address" type="text"/>
+        </createTable>
+
+        <createTable tableName="account">
+            <column name="number" type="text">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_account_clients" references="clients(id)"/>
+            </column>
+            <column name="balance" type="int" defaultValue="0"/>
+            <column name="is_locked" type="boolean" defaultValue="false"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-09-08 Add transaction table" author="Rauno Kivi">
+        <createTable tableName="transactions">
+            <column name="index" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="number" type="text">
+            <constraints nullable="false" foreignKeyName="fk_transactions_account" references="account(number)"/>
+            </column>
+            <column name="transaction" type="text"/>
+            <column name="amount" type="int"/>
+            <column name="number_to" type="text"/>
+            <column name="time" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2021-09-08 Add transaction table again" author="Rauno Kivi">
+        <createTable tableName="transactions">
+            <column name="index" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="number" type="text">
+                <constraints nullable="false" foreignKeyName="fk_transactions_account" references="account(number)"/>
+            </column>
+            <column name="amount" type="int"/>
+            <column name="number_to" type="text"/>
+            <column name="time" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    
+<!--    <changeSet id="2021-09-08 Drop transaction table transaction field" author="Rauno Kivi">-->
+<!--        <dropColumn tableName="transaction" columnName="transaction"/>-->
+<!--    </changeSet>-->
+</databaseChangeLog>
