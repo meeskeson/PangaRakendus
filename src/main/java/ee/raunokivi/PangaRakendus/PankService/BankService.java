@@ -1,6 +1,8 @@
 package ee.raunokivi.PangaRakendus.PankService;
 
 import ee.raunokivi.PangaRakendus.*;
+import ee.raunokivi.PangaRakendus.Exceptions.ApplicationException;
+import ee.raunokivi.PangaRakendus.Exceptions.ErrorResponse;
 import ee.raunokivi.PangaRakendus.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -110,46 +112,56 @@ public class BankService {
 
     @Transactional
     public String depositMoney(String accountNr, int amount) {
+        if (amount <= 0) {
+            throw new ApplicationException("Amount should be a positive number.");
+        }
         AccountPlus account = accountRepository.getAccountPlus(accountNr);
+        if (account.isIs_locked()) {
+            throw new ApplicationException("Account is locked.");
+        }
         History history = new History(accountNr, amount, null);
-        if (!account.isIs_locked()) {
-            int newBalance = account.getBalance() + amount;
-            accountRepository.updateAccount(accountNr, newBalance);
-            accountRepository.createTransaction(history);
-            return "You have deposited " + amount + " amount of money.";
-        } else return "Your account is locked.";
+        int newBalance = account.getBalance() + amount;
+        accountRepository.updateAccount(accountNr, newBalance);
+        accountRepository.createTransaction(history);
+        return "You have deposited " + amount + " amount of money.";
     }
 
     @Transactional
     public String withdrawMoney(String accountNr, int amount) {
         AccountPlus account = accountRepository.getAccountPlus(accountNr);
-        History history = new History(accountNr,amount*-1, null);
-        if (!account.isIs_locked()) {
-            int oldBalance = account.getBalance();
-            if (oldBalance >= amount) {
-                int newBalance = oldBalance - amount;
-                accountRepository.updateAccount(accountNr, newBalance);
-                accountRepository.createTransaction(history);
-                return "Withdrawal has been completed.";
-            } else return "You have insufficient funds.";
-        } else return "Your account is locked.";
+        int oldBalance = account.getBalance();
+        if (oldBalance < amount) {
+            throw new ApplicationException("You have insufficient funds.");
+        }
+        if (account.isIs_locked()) {
+            throw new ApplicationException("Account is locked.");
+        }
+        History history = new History(accountNr, amount * -1, null);
+        int newBalance = oldBalance - amount;
+        accountRepository.updateAccount(accountNr, newBalance);
+        accountRepository.createTransaction(history);
+        return "Withdrawal has been completed.";
     }
 
     @Transactional
     public String transferMoney(String accountFrom, String accountTo, int amount) {
         AccountPlus accFrom = accountRepository.getAccountPlus(accountFrom);
         AccountPlus accTo = accountRepository.getAccountPlus(accountTo);
-        History history = new History(accountFrom,amount*-1, accountTo);
+        if (accFrom.isIs_locked() || accTo.isIs_locked()) {
+            throw new ApplicationException("Account is locked.");
+        }
+        if (accFrom.getBalance() < amount) {
+            throw new ApplicationException("You have insufficient funds.");
+        }
+        History history = new History(accountFrom, amount * -1, accountTo);
         History secondHistory = new History(accountTo, amount, accountFrom);
-        if (!accFrom.isIs_locked() || !accTo.isIs_locked()) {
-            int nr1Balance = accFrom.getBalance() - amount;
-            int nr2Balance = accTo.getBalance() + amount;
-            accountRepository.updateAccount(accountFrom, nr1Balance);
-            accountRepository.updateAccount(accountTo, nr2Balance);
-            accountRepository.createTransaction(history);
-            accountRepository.createTransaction(secondHistory);
-            return "It is DONE.";
-        } else return "Your account is locked.";
+        int nr1Balance = accFrom.getBalance() - amount;
+        int nr2Balance = accTo.getBalance() + amount;
+        accountRepository.updateAccount(accountFrom, nr1Balance);
+        accountRepository.updateAccount(accountTo, nr2Balance);
+        accountRepository.createTransaction(history);
+        accountRepository.createTransaction(secondHistory);
+        return "It is DONE.";
     }
 
     public List<String> getAllNames() {
