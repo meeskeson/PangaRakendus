@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Listi kuvamis näide</h2>
+<input id="listSample1">
+<input id="listSample2">
+<button id="showListButton">kuva list</button>
+<button id="emptyListButton">kustuta</button>
+
+<table border="1" id="table-sample">
+    <tr>
+        <td>nimi</td>
+        <td>mingi muu</td>
+    </tr>
+</table>
+<script>
+    let showListButton = document.getElementById("showListButton");
+    let x = document.getElementById("listSample1");
+    let y = document.getElementById("listSample2");
+    showListButton.onclick = function () {
+        let newRow = document.createElement("tr")
+        let column1 = document.createElement("td")
+        let column2 = document.createElement("td")
+
+        if (x.value > y.value) {
+            for (let i = 1; i < y; i++) {
+                for (let j = 1; j < x; j++) {
+                    column1.innerText = (i*j).toString()
+                    column2.innerText = (i*j+1).toString()
+                }
+            }
+        }
+
+            column1.innerText = x.value
+            column2.innerText = y.value
+        newRow.appendChild(column1)
+        newRow.appendChild(column2)
+        let table = document.getElementById("table-sample")
+        table.appendChild(newRow)
+    }
+
+    let emptyListButton = document.getElementById("emptyListButton")
+    emptyListButton.onclick = function () {
+        let table = document.getElementById("table-sample")
+        table.innerHTML = ""
+    }
+</script>
+<script>
+    let showListButton = document.getElementById("showListButton");
+    showListButton.onclick = function () {
+        fetch("list")
+            .then(result => result.json())
+            .then(function (data) {
+
+            })
+    }
+</script>
+
+
+</body>
+</html>

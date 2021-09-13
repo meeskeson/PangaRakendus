@@ -19,7 +19,7 @@ public class Controller {
         return bankService.createClient(newClient);
     }
 
-    @PostMapping("create")
+    @PostMapping("createaccount")
     public String createAccount(@RequestBody Account newAccount) {
         return bankService.createAccount(newAccount);
     }
