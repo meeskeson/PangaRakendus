@@ -2,6 +2,28 @@ body {
     text-align: center;
 }
 
+table, th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    margin-top: 30px;
+    margin-left: 2% ;
+    text-align: center;
+    font-family: 'Urbanist', sans-serif;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+th {
+    background-color: #04AA6D;
+    color: white;
+}
+
+#listpage {
+    text-align: left;
+    margin-left: 2%;
+}
+
 #logo {
    alignment: center;
     height: auto;
@@ -66,7 +88,7 @@ input {
 
 .container {
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 50%;
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
