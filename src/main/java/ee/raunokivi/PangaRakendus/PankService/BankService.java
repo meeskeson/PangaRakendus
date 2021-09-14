@@ -2,7 +2,6 @@ package ee.raunokivi.PangaRakendus.PankService;
 
 import ee.raunokivi.PangaRakendus.*;
 import ee.raunokivi.PangaRakendus.Exceptions.ApplicationException;
-import ee.raunokivi.PangaRakendus.Exceptions.ErrorResponse;
 import ee.raunokivi.PangaRakendus.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -38,8 +37,8 @@ public class BankService {
             result.setAddress(resultSet.getString("address"));
             result.setBalance(resultSet.getInt("balance"));
             result.setNumber(resultSet.getString("number"));
-            result.setFirstname(resultSet.getString("firstname"));
-            result.setLastname(resultSet.getString("lastname"));
+            result.setFirstName(resultSet.getString("firstname"));
+            result.setLastName(resultSet.getString("lastname"));
             return result;
         }
     }
