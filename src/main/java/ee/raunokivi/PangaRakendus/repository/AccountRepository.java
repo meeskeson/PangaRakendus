@@ -50,11 +50,11 @@ public class AccountRepository {
         jdbcTemplate.update(sql, paramMap);
     }
 
-    public List<History> getHistory(String accountNr) {
+    public List<AltHistory> getHistory(String accountNr) {
         String sql = "SELECT * FROM transactions WHERE number = :a1 ";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("a1", accountNr);
-        return jdbcTemplate.query(sql, paramMap, new BankService.HistoryRowMapper());
+        return jdbcTemplate.query(sql, paramMap, new BankService.AltHistoryRowMapper());
     }
 
     public List<All> getList() {
@@ -125,5 +125,27 @@ public class AccountRepository {
         paramMap.put("a2", accountNr);
         paramMap.put("a1", false);
         jdbcTemplate.update(sql, paramMap);
+    }
+
+    public void deleteRow(int index) {
+        String sql = "DELETE FROM transactions WHERE index = :a1";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("a1", index);
+        jdbcTemplate.update(sql, paramMap);
+    }
+
+    public List<AltHistory> sortRow(String accountNr) {
+        String sql = "SELECT * FROM transactions WHERE number = :a1 ORDER BY amount desc";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("a1", accountNr);
+        return jdbcTemplate.query(sql, paramMap, new BankService.AltHistoryRowMapper());
+    }
+
+    public List<AltHistory> searchRow(String numberTo, String accountNr) {
+        String sql = "SELECT * FROM transactions WHERE number_to ILIKE :a1 AND number = :a2";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("a1", "%" + numberTo + "%");
+        paramMap.put("a2", accountNr);
+        return jdbcTemplate.query(sql, paramMap, new BankService.AltHistoryRowMapper());
     }
 }

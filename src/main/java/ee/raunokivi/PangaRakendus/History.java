@@ -20,7 +20,8 @@ public class History {
         this.number_to = number_to;
     }
 
-    public History() {}
+    public History() {
+    }
 
     public int getAmount() {
         return amount;

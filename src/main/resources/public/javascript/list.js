@@ -1,7 +1,7 @@
 let newButton = document.getElementById("newButton");
 let listTable = document.getElementById("listTable");
 newButton.onclick = function () {
-    fetch("history")
+    fetch("list")
         .then(result => result.json())
         .then(function (data) {
             for (let i = 0; i < data.length; i++) {

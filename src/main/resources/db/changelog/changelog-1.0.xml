@@ -52,7 +52,8 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="number" type="text">
-            <constraints nullable="false" foreignKeyName="fk_transactions_account" references="account(number)"/>
+                <constraints nullable="false"
+                             foreignKeyName="fk_transactions_account" references="account(number)"/>
             </column>
             <column name="transaction" type="text"/>
             <column name="amount" type="int"/>
@@ -74,8 +75,8 @@
             <column name="time" type="timestamp"/>
         </createTable>
     </changeSet>
-    
-<!--    <changeSet id="2021-09-08 Drop transaction table transaction field" author="Rauno Kivi">-->
-<!--        <dropColumn tableName="transaction" columnName="transaction"/>-->
-<!--    </changeSet>-->
+
+    <!--    <changeSet id="2021-09-08 Drop transaction table transaction field" author="Rauno Kivi">-->
+    <!--        <dropColumn tableName="transaction" columnName="transaction"/>-->
+    <!--    </changeSet>-->
 </databaseChangeLog>

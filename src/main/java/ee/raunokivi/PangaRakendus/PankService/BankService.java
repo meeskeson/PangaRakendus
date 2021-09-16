@@ -72,6 +72,20 @@ public class BankService {
         }
     }
 
+    public static class AltHistoryRowMapper implements RowMapper<AltHistory> {
+
+        @Override
+        public AltHistory mapRow(ResultSet resultSet, int i) throws SQLException {
+            AltHistory result = new AltHistory();
+            result.setIndex(resultSet.getInt("index"));
+            result.setNumber(resultSet.getString("number"));
+            result.setAmount(resultSet.getInt("amount"));
+            result.setNumber_to(resultSet.getString("number_to"));
+            result.setTime(resultSet.getString("time"));
+            return result;
+        }
+    }
+
     public static class WithdrawRowMapper implements RowMapper<AccountPlus> {
 
         @Override
@@ -84,7 +98,7 @@ public class BankService {
         }
     }
 
-    public List<History> getHistory(String accountNr) {
+    public List<AltHistory> getHistory(String accountNr) {
         return accountRepository.getHistory(accountNr);
     }
 
@@ -183,5 +197,18 @@ public class BankService {
     public String unlockAccount(String accountNr) {
         accountRepository.unlockAccount(accountNr);
         return "Your account has been unlocked.";
+    }
+
+    public String deleteRow(int index) {
+        accountRepository.deleteRow(index);
+        return "You have deleted a row";
+    }
+
+    public List<AltHistory> sortRow(String accountNr) {
+        return accountRepository.sortRow(accountNr);
+    }
+
+    public List<AltHistory> searchRow(String numberTo, String accountNr) {
+        return accountRepository.searchRow(numberTo, accountNr);
     }
 }

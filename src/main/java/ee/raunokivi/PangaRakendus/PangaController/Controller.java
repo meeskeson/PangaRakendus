@@ -35,7 +35,7 @@ public class Controller {
     }
 
     @GetMapping("gethistory/{accountNr}")
-    public List<History> getHistory(@PathVariable("accountNr") String accountNr) {
+    public List<AltHistory> getHistory(@PathVariable("accountNr") String accountNr) {
         return bankService.getHistory(accountNr);
     }
 
@@ -82,5 +82,16 @@ public class Controller {
     @PutMapping("unlock/{id}")
     public String unlockAccount(@PathVariable("id") String id) {
         return bankService.unlockAccount(id);
+    }
+
+    @DeleteMapping("delete/{index}")
+    public String deleteRow(@PathVariable("index") int index) { return bankService.deleteRow(index);}
+
+    @GetMapping("sort/{accountNr}")
+    public List<AltHistory> sortRow(@PathVariable("accountNr") String accountNr) {return bankService.sortRow(accountNr);}
+
+    @GetMapping("search/{numberTo}/{accountNr}")
+    public List<AltHistory> searchRow(@PathVariable("numberTo") String numberTo, @PathVariable("accountNr") String accountNr) {
+        return bankService.searchRow(numberTo, accountNr);
     }
 }
